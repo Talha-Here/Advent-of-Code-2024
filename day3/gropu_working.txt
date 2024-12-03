@@ -1,0 +1,75 @@
+The `group()` method in Python's `re.Match` object is used to retrieve the specific portion(s) of the input string that were matched by the regular expression.
+
+### Key Points About `group()`
+
+1. **Access the Entire Match**:
+   - `match.group(0)` returns the entire substring that matched the regex pattern.
+   - Example:
+     ```python
+     import re
+     match = re.search(r"(\d+)", "abc123def")
+     print(match.group(0))  # Output: 123
+     ```
+
+2. **Access Specific Groups**:
+   - Groups are defined in a regular expression using parentheses `()`.
+   - You can access individual matched groups by their position (starting from 1).
+   - Example:
+     ```python
+     match = re.search(r"(\d+)-(\d+)", "abc123-456def")
+     print(match.group(1))  # Output: 123
+     print(match.group(2))  # Output: 456
+     ```
+
+3. **Access Multiple Groups**:
+   - Pass multiple indices to `group()` to retrieve a tuple of those groups.
+   - Example:
+     ```python
+     print(match.group(1, 2))  # Output: ('123', '456')
+     ```
+
+4. **Groups Can Be `None`**:
+   - If a group is optional or does not match, `group()` will return `None` for that group.
+   - Example:
+     ```python
+     match = re.search(r"(\d+)?-(\d+)", "abc-456def")
+     print(match.group(1))  # Output: None
+     print(match.group(2))  # Output: 456
+     ```
+
+5. **Default Behavior**:
+   - Calling `group()` without arguments is equivalent to `group(0)`, which returns the entire match.
+   - Example:
+     ```python
+     print(match.group())  # Output: 123-456
+     ```
+
+### Example with `mul(x, y)` Pattern
+
+Let's look at your use case for `mul(x, y)`:
+
+```python
+import re
+
+text = "mul(3,5)"
+pattern = r"mul\((\d+),(\d+)\)"
+match = re.search(pattern, text)
+
+if match:
+    print(match.group(0))  # Entire match: "mul(3,5)"
+    print(match.group(1))  # First group: "3"
+    print(match.group(2))  # Second group: "5"
+```
+
+**Output**:
+```
+mul(3,5)
+3
+5
+```
+
+### Summary of `group()` Behavior
+- **`group(0)`**: Entire match.
+- **`group(1)`**: First group (based on parentheses in regex).
+- **`group(n)`**: nth group (if it exists).
+- **`group(1, 2, ...)`**: Tuple of specified groups.

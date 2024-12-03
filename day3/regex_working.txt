@@ -1,0 +1,126 @@
+Regular expressions (regex) are powerful tools used to match patterns in strings. They work by defining a search pattern using a combination of literal characters and special symbols, allowing you to locate, extract, replace, or validate text based on complex rules.
+
+---
+
+### **Key Concepts of Regex**
+
+1. **Literal Characters**:
+   - These match themselves directly in the text.
+   - Example: The pattern `hello` matches the string `"hello"`.
+
+2. **Metacharacters (Special Symbols)**:
+   - Symbols with special meanings to create more dynamic patterns.
+   - Example:
+     - `.` matches any single character except a newline.
+     - `^` matches the start of a string.
+     - `$` matches the end of a string.
+     - `*`, `+`, `?`, `{}` control repetitions.
+
+3. **Character Classes**:
+   - Define sets of characters to match.
+   - `[abc]` matches any one of `a`, `b`, or `c`.
+   - `\d` matches any digit (equivalent to `[0-9]`).
+   - `\w` matches any word character (letters, digits, underscores).
+
+4. **Quantifiers**:
+   - Specify how many times a pattern should repeat.
+   - `*` matches 0 or more times.
+   - `+` matches 1 or more times.
+   - `{n,m}` matches between `n` and `m` times.
+
+5. **Groups and Capturing**:
+   - Parentheses `()` are used to group patterns and capture matched substrings.
+   - Example: `(ab)+` matches `ab`, `abab`, `ababab`.
+
+6. **Escaping Special Characters**:
+   - Use a backslash `\` to match literal metacharacters.
+   - Example: `\.` matches a period `.`.
+
+---
+
+### **How Regex Works**
+Regex engines process the pattern and string step by step, evaluating whether the pattern matches the string.
+
+1. **Pattern Compilation**:
+   - The regex is converted into an internal representation for efficient processing.
+
+2. **Pattern Matching**:
+   - The engine starts at the beginning of the string and checks if the pattern matches.
+   - It can match greedily (the longest possible match) or lazily (the shortest match).
+
+3. **Result Return**:
+   - If a match is found, the engine returns the matched text or groups.
+   - If not, it returns `None` or indicates failure.
+
+---
+
+### **Examples**
+
+#### **Match a Pattern**
+```python
+import re
+text = "hello123"
+pattern = r"hello\d+"  # 'hello' followed by one or more digits
+match = re.search(pattern, text)
+if match:
+    print("Matched:", match.group(0))
+```
+**Output**:
+```
+Matched: hello123
+```
+
+#### **Extract Multiple Matches**
+```python
+text = "email: test@example.com, support@company.org"
+pattern = r"\w+@\w+\.\w+"
+emails = re.findall(pattern, text)
+print(emails)
+```
+**Output**:
+```
+['test@example.com', 'support@company.org']
+```
+
+#### **Replace Matches**
+```python
+text = "The price is $5.00."
+pattern = r"\$\d+\.\d{2}"  # Match dollar amounts
+result = re.sub(pattern, "[PRICE]", text)
+print(result)
+```
+**Output**:
+```
+The price is [PRICE].
+```
+
+---
+
+### **Regex Features**
+
+#### **Anchors**
+- `^`: Start of a string.
+- `$`: End of a string.
+- Example: `^hello` matches strings starting with `hello`.
+
+#### **Lookaheads and Lookbehinds**
+- Allow matching patterns based on context before or after a match, without including them in the match.
+- Example: `(?<=\$)\d+` matches digits preceded by `$`.
+
+#### **Flags**
+- Modify the behavior of regex matching.
+- Example: `re.IGNORECASE` makes the search case-insensitive.
+
+---
+
+### **Applications of Regex**
+1. **Validation**:
+   - Ensure input matches a required format (e.g., email, phone number).
+2. **Searching**:
+   - Find specific text patterns in large datasets.
+3. **Text Processing**:
+   - Extract, replace, or split text based on patterns.
+4. **Data Parsing**:
+   - Process logs, files, or network data.
+
+Regex is widely used in text editors, programming languages, and command-line tools. While it can appear complex, mastering regex provides a robust toolkit for text manipulation tasks.
